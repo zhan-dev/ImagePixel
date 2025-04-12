@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.dragAnddrop_lbl = new System.Windows.Forms.Label();
             this.img_trackBar = new System.Windows.Forms.TrackBar();
             this.img = new System.Windows.Forms.PictureBox();
+            this.save_pb = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.img_trackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.save_pb)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer
@@ -51,37 +52,30 @@
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.dragAnddrop_lbl);
             this.splitContainer.Panel1.Controls.Add(this.img);
+            this.splitContainer.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.save_pb);
             this.splitContainer.Panel2.Controls.Add(this.img_trackBar);
-            this.splitContainer.Size = new System.Drawing.Size(774, 376);
-            this.splitContainer.SplitterDistance = 711;
+            this.splitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer.Size = new System.Drawing.Size(665, 565);
+            this.splitContainer.SplitterDistance = 609;
             this.splitContainer.SplitterWidth = 5;
             this.splitContainer.TabIndex = 0;
             // 
-            // dragAnddrop_lbl
-            // 
-            this.dragAnddrop_lbl.Location = new System.Drawing.Point(13, 9);
-            this.dragAnddrop_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.dragAnddrop_lbl.Name = "dragAnddrop_lbl";
-            this.dragAnddrop_lbl.Size = new System.Drawing.Size(170, 16);
-            this.dragAnddrop_lbl.TabIndex = 0;
-            this.dragAnddrop_lbl.Text = "Перетащи картинку сюда";
-            this.dragAnddrop_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // img_trackBar
             // 
-            this.img_trackBar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.img_trackBar.Location = new System.Drawing.Point(13, 0);
+            this.img_trackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.img_trackBar.Location = new System.Drawing.Point(5, 31);
             this.img_trackBar.Margin = new System.Windows.Forms.Padding(4);
             this.img_trackBar.Maximum = 100;
             this.img_trackBar.Minimum = 1;
             this.img_trackBar.Name = "img_trackBar";
             this.img_trackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.img_trackBar.Size = new System.Drawing.Size(45, 376);
+            this.img_trackBar.Size = new System.Drawing.Size(45, 534);
             this.img_trackBar.TabIndex = 0;
             this.img_trackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.img_trackBar.Value = 1;
@@ -94,26 +88,38 @@
             this.img.Location = new System.Drawing.Point(0, 0);
             this.img.Margin = new System.Windows.Forms.Padding(4);
             this.img.Name = "img";
-            this.img.Size = new System.Drawing.Size(711, 376);
+            this.img.Size = new System.Drawing.Size(609, 565);
             this.img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.img.TabIndex = 0;
             this.img.TabStop = false;
             this.img.Click += new System.EventHandler(this.img_Click);
             this.img.DragDrop += new System.Windows.Forms.DragEventHandler(this.img_DragDrop);
             this.img.DragEnter += new System.Windows.Forms.DragEventHandler(this.img_DragEnter);
-            this.img.DragLeave += new System.EventHandler(this.img_DragLeave);
+            this.img.MouseHover += new System.EventHandler(this.img_MouseHover);
+            // 
+            // save_pb
+            // 
+            this.save_pb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.save_pb.BackgroundImage = global::ImagePixel.Properties.Resources.File_DownloadPng;
+            this.save_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.save_pb.Location = new System.Drawing.Point(4, 3);
+            this.save_pb.Name = "save_pb";
+            this.save_pb.Size = new System.Drawing.Size(44, 28);
+            this.save_pb.TabIndex = 2;
+            this.save_pb.TabStop = false;
+            this.save_pb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // img_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 376);
+            this.ClientSize = new System.Drawing.Size(665, 565);
             this.Controls.Add(this.splitContainer);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "img_form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "0 %";
+            this.Shown += new System.EventHandler(this.img_form_Shown);
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
             this.splitContainer.Panel2.PerformLayout();
@@ -121,6 +127,7 @@
             this.splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.img_trackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.save_pb)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -130,7 +137,7 @@
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.PictureBox img;
         private System.Windows.Forms.TrackBar img_trackBar;
-        private System.Windows.Forms.Label dragAnddrop_lbl;
+        private System.Windows.Forms.PictureBox save_pb;
     }
 }
 
