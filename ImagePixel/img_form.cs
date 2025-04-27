@@ -1,18 +1,12 @@
 ﻿using ImagePixel.Classes;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
-using ImagePixel.Properties;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 
 namespace ImagePixel
 {
@@ -58,6 +52,8 @@ namespace ImagePixel
                 ImgLoad(dlg.FileName);
         }
 
+        ImgInfo imgInfo = new ImgInfo();
+
         private async void ImgLoad(string dlgFileName)
         {
             var sw = Stopwatch.StartNew();
@@ -79,6 +75,8 @@ namespace ImagePixel
                                       elapsed.Minutes,
                                       elapsed.Seconds,
                                       elapsed.Milliseconds);
+
+            imgInfo.Name = dlgFileName;
         }
 
         private void RunProcessing(Bitmap bitmap)
@@ -112,6 +110,7 @@ namespace ImagePixel
                     this.Text = $"{i} %"; 
                     img_trackBar.Value = i;
                     img.Image = _bitmaps[img_trackBar.Value - 1];
+                    imgInfo.scroll_Percentage = img_trackBar.Value;
                 }));
             }
             _bitmaps.Add(bitmap);
@@ -159,7 +158,9 @@ namespace ImagePixel
             this.Text = $"{img_trackBar.Value.ToString()} %";
             if (_bitmaps == null || _bitmaps.Count == 0) 
                 return;
-            img.Image = _bitmaps[img_trackBar.Value-1]; 
+            img.Image = _bitmaps[img_trackBar.Value-1];
+
+            imgInfo.scroll_Percentage = img_trackBar.Value;
         }
 
         private void img_form_Shown(object sender, EventArgs e)
@@ -194,6 +195,8 @@ namespace ImagePixel
                                       elapsed.Minutes,
                                       elapsed.Seconds,
                                       elapsed.Milliseconds);
+
+            imgInfo.Name = "sample.jpg";
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -203,13 +206,30 @@ namespace ImagePixel
                 try
                 {
                     string folderName = "Saved Images";
-                    string fileName = $"Image_{DateTime.Now:dd-MMM-yyyy_HHmm-fff}.png";
+                    string fileName = $"{imgInfo.scroll_Percentage}% {Path.GetFileName(imgInfo.Name)}";
+
                     string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, folderName);
                     if (!Directory.Exists(folderPath))
                         Directory.CreateDirectory(folderPath);
 
-                    string filePath = Path.Combine(folderPath, $"{fileName}");
-                    img.Image.Save(filePath, ImageFormat.Png);
+                    string filePath = Path.Combine(folderPath, fileName);
+                    img.Image.Save(filePath);
+
+                    //string fileExt = Path.GetExtension(imgInfo.Name).ToLower();
+                    //ImageFormat format;
+                    //switch (fileExt.ToLower())
+                    //{
+                    //    case ".png":
+                    //        format = ImageFormat.Png;
+                    //        break;
+                    //    case ".jpeg":
+                    //    case ".jpg":
+                    //        format = ImageFormat.Jpeg;
+                    //        break;
+                    //    default:
+                    //        throw new ArgumentException($"Формат '{fileExt}' не поддерживается.");
+                    //}
+                    //img.Image.Save(filePath, format);
 
                     DialogResult result = MessageBox.Show($"Изображение сохранено \n \n Открываем папку с файлом?", "Результат",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
