@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ImgInfo.cs" />
     <Compile Include="Classes\Pixel.cs" />
     <Compile Include="img_form.cs">
       <SubType>Form</SubType>
