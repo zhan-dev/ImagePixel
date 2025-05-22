@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace ImagePixel
         public img_form()
         {
             InitializeComponent();
+
             img.AllowDrop = true;
 
             save_pb.MouseHover += (sender, e) => { save_pb.Cursor = Cursors.Hand; };
@@ -37,7 +39,27 @@ namespace ImagePixel
             {
                 string filePath = filePaths[0];
                 if (new[] { ".bmp", ".png", ".jpg" }.Contains(Path.GetExtension(filePath).ToLower()))
+                {
                     ImgLoad(filePath);
+
+                    //for Form W/H
+                    using (Image img = Image.FromFile(filePath))
+                    {
+                        float scale = 0.80f;
+                        int scaledWidth = (int)(img.Width * scale);
+                        int scaledHeight = (int)(img.Height * scale);
+
+                        int maxWidth = 1980; int maxHeight = 1024;
+
+                        // Вычисляем минимальный коэффициент для ограничения размеров
+                        float scaleX = (float)maxWidth / scaledWidth;
+                        float scaleY = (float)maxHeight / scaledHeight;
+                        float finalScale = Math.Min(Math.Min(scaleX, scaleY), 1.0f); // Не увеличиваем изображение
+
+                        this.Width = (int)(scaledWidth * finalScale);
+                        this.Height = (int)(scaledHeight * finalScale);
+                    }
+                }    
             }
         }
 
@@ -64,7 +86,7 @@ namespace ImagePixel
             img_trackBar.Value = 1;
             _bitmaps.Clear();
             Bitmap bitmap = new Bitmap(dlgFileName);
-            await Task.Run(() => { RunProcessing(bitmap); });
+            await Task.Run(() => {RunProcessing(bitmap);});
             img_trackBar.Enabled = true;
             img.Enabled = true;
             save_pb.Enabled = true;
