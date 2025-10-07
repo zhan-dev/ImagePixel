@@ -60,19 +60,19 @@
             this.splitContainer.Panel2.Controls.Add(this.save_pb);
             this.splitContainer.Panel2.Controls.Add(this.img_trackBar);
             this.splitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer.Size = new System.Drawing.Size(665, 565);
-            this.splitContainer.SplitterDistance = 608;
+            this.splitContainer.Size = new System.Drawing.Size(684, 231);
+            this.splitContainer.SplitterDistance = 626;
             this.splitContainer.SplitterWidth = 5;
             this.splitContainer.TabIndex = 0;
             // 
             // img
             // 
             this.img.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.img.Image = global::ImagePixel.Properties.Resources.upload;
+            this.img.Image = global::ImagePixel.Properties.Resources.loading;
             this.img.Location = new System.Drawing.Point(0, 0);
             this.img.Margin = new System.Windows.Forms.Padding(4);
             this.img.Name = "img";
-            this.img.Size = new System.Drawing.Size(608, 565);
+            this.img.Size = new System.Drawing.Size(626, 231);
             this.img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.img.TabIndex = 0;
             this.img.TabStop = false;
@@ -103,7 +103,7 @@
             this.img_trackBar.Minimum = 1;
             this.img_trackBar.Name = "img_trackBar";
             this.img_trackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.img_trackBar.Size = new System.Drawing.Size(45, 534);
+            this.img_trackBar.Size = new System.Drawing.Size(45, 200);
             this.img_trackBar.TabIndex = 0;
             this.img_trackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.img_trackBar.Value = 1;
@@ -113,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(665, 565);
+            this.ClientSize = new System.Drawing.Size(684, 231);
             this.Controls.Add(this.splitContainer);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
