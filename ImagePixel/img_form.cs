@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,8 +12,8 @@ namespace ImagePixel
 {
     public partial class img_form : Form
     {
-        private List<Bitmap> _bitmaps = new List<Bitmap>();
-        private Random _random = new Random();
+        private readonly List<Bitmap> _bitmaps = new List<Bitmap>();
+        private readonly Random _random = new Random();
 
         public img_form()
         {
@@ -59,7 +58,7 @@ namespace ImagePixel
                         this.Width = (int)(scaledWidth * finalScale);
                         this.Height = (int)(scaledHeight * finalScale);
                     }
-                }    
+                }
             }
         }
 
@@ -71,12 +70,12 @@ namespace ImagePixel
                 Filter = "Images|*.bmp;*.png;*.jpg"
             };
             if (dlg.ShowDialog() == DialogResult.OK)
-                ImgLoad(dlg.FileName);
+                _ = ImgLoad(dlg.FileName);
         }
 
         ImgInfo imgInfo = new ImgInfo();
 
-        private async void ImgLoad(string dlgFileName)
+        private async Task ImgLoad(string dlgFileName)
         {
             var sw = Stopwatch.StartNew();
             img_trackBar.Enabled = false;
@@ -86,7 +85,7 @@ namespace ImagePixel
             img_trackBar.Value = 1;
             _bitmaps.Clear();
             Bitmap bitmap = new Bitmap(dlgFileName);
-            await Task.Run(() => {RunProcessing(bitmap);});
+            await Task.Run(() => { RunProcessing(bitmap); });
             img_trackBar.Enabled = true;
             img.Enabled = true;
             save_pb.Enabled = true;
@@ -127,9 +126,9 @@ namespace ImagePixel
 
                 _bitmaps.Add(currentBitmap);
 
-                this.Invoke(new Action(() => 
+                this.Invoke(new Action(() =>
                 {
-                    this.Text = $"{i} %"; 
+                    this.Text = $"{i} %";
                     img_trackBar.Value = i;
                     img.Image = _bitmaps[img_trackBar.Value - 1];
                     imgInfo.scroll_Percentage = img_trackBar.Value;
@@ -178,9 +177,9 @@ namespace ImagePixel
         private void img_trackBar_Scroll(object sender, EventArgs e)
         {
             this.Text = $"{img_trackBar.Value.ToString()} %";
-            if (_bitmaps == null || _bitmaps.Count == 0) 
+            if (_bitmaps == null || _bitmaps.Count == 0)
                 return;
-            img.Image = _bitmaps[img_trackBar.Value-1];
+            img.Image = _bitmaps[img_trackBar.Value - 1];
 
             imgInfo.scroll_Percentage = img_trackBar.Value;
         }
